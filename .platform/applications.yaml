@@ -83,10 +83,10 @@
             set -e
             cd $PLATFORM_APP_DIR
             npx corepack enable
-            npx corepack prepare yarn@4.9.2 --activate
+            npx corepack prepare yarn@4.18.1 --activate
             export PATH="$HOME/.yarn/bin:$PATH"
             corepack yarn --version
-            corepack yarn install
+            YARN_ENABLE_IMMUTABLE_INSTALLS=false corepack yarn install
         # The deploy hook runs after your application has been deployed and started.
         # Code cannot be modified at this point but the database is available.
         # The site is not accepting requests while this script runs so keep it
@@ -188,7 +188,7 @@
 #   This will allow for a start of a storybook:http upstream
 # -------------------------------------------------------------
 -   name: storybook
-    type: 'nodejs:20'
+    type: 'nodejs:24'
     source:
         root: "/"
     dependencies:
@@ -209,10 +209,10 @@
             cd $PLATFORM_APP_DIR
             composer install --ignore-platform-reqs --no-scripts 
             npx corepack enable
-            npx corepack prepare yarn@4.9.2 --activate
+            npx corepack prepare yarn@4.18.1 --activate
             export PATH="$HOME/.yarn/bin:$PATH"
             corepack yarn --version
-            corepack yarn install
+            YARN_ENABLE_IMMUTABLE_INSTALLS=false corepack yarn install
             corepack yarn storybook:build
         post_deploy: |
             cd $PLATFORM_APP_DIR

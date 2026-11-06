@@ -7,8 +7,8 @@
 
 echo "Initializing Storybook for Varbase..."
 
-# Install necessary dependencies for Storybook.
-yarn install
+# Install necessary dependencies for Storybook. No yarn.lock is committed.
+YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
 # Store the current working directory path for later use.
 current_path=$(pwd);
