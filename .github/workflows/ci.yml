@@ -28,10 +28,9 @@ jobs:
         env:
           # No yarn.lock is committed, so Yarn 4 must be allowed to create one.
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-          # postinstall syncs front-end libraries from the Composer-built
-          # docroot, which this job does not build.
-          YARN_ENABLE_SCRIPTS: "false"
+        # The root postinstall syncs front-end libraries from the Composer-built
+        # docroot, which this job does not build; --mode=skip-build skips it.
         run: |
           corepack enable
           yarn --version
-          yarn install
+          yarn install --mode=skip-build
