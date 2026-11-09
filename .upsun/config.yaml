@@ -65,10 +65,10 @@ applications:
                 set -e
                 cd $PLATFORM_APP_DIR
                 npx corepack enable
-                npx corepack prepare yarn@4.9.2 --activate
+                npx corepack prepare yarn@4.18.1 --activate
                 export PATH="$HOME/.yarn/bin:$PATH"
                 corepack yarn --version
-                corepack yarn install
+                YARN_ENABLE_IMMUTABLE_INSTALLS=false corepack yarn install
             # The deploy hook runs after your application has been deployed and started.
             # Code cannot be modified at this point but the database is available.
             # The site is not accepting requests while this script runs so keep it
@@ -159,7 +159,7 @@ applications:
         #
         #   This will allow for a start of a storybook:http upstream
         # -------------------------------------------------------------
-        type: 'nodejs:20'
+        type: 'nodejs:24'
         source:
             root: "/"
         dependencies:
@@ -174,7 +174,7 @@ applications:
                 NODE_OPTIONS: --max-old-space-size=4096
                 STORYBOOK_SERVER_RENDER_URL: 'https://demo.varbase.vardot.com'
         hooks:
-            build: "set -e\ncd $PLATFORM_APP_DIR\ncomposer install --ignore-platform-reqs --no-scripts \nnpx corepack enable\nnpx corepack prepare yarn@4.9.2 --activate\nexport PATH=\"$HOME/.yarn/bin:$PATH\"\ncorepack yarn --version\ncorepack yarn install\ncorepack yarn storybook:build\n"
+            build: "set -e\ncd $PLATFORM_APP_DIR\ncomposer install --ignore-platform-reqs --no-scripts \nnpx corepack enable\nnpx corepack prepare yarn@4.18.1 --activate\nexport PATH=\"$HOME/.yarn/bin:$PATH\"\ncorepack yarn --version\nYARN_ENABLE_IMMUTABLE_INSTALLS=false corepack yarn install\ncorepack yarn storybook:build\n"
             post_deploy: |
                 cd $PLATFORM_APP_DIR
                 export STORYBOOK_SERVER_RENDER_URL=$(node .storybook/setup-storybook.js)
